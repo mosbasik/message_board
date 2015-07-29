@@ -1,3 +1,9 @@
 from django.forms import ModelForm
 
-# Create your forms here.
+from main.models import Post
+
+
+class PostForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = '__all__'
