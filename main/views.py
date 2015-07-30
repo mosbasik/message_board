@@ -16,10 +16,9 @@ def index(request):
     return render(request, 'index.html')
 
 
+def register(request):
 
-def login(request):
-
-    # if the user is already logged in, redirect them to the front page
+    # if a user is already logged in, redirect to the front page
     if request.user.is_authenticated():
         return redirect('index')
 
@@ -29,47 +28,75 @@ def login(request):
     # if the hit to this URL was a POST (not GET or DELETE or whatever)
     if request.method == 'POST':
 
-        # if the user filled out the login form
-        if request.POST['type'] == 'login':
+        # get and check if the filled form is valid
+        filled_user_creation_form = UserCreationForm(request.POST)
+        if filled_user_creation_form.is_valid():
 
-            # attempt to authenticate the user
-            print request.POST['username']
+            # create a new user object with the form information
+            user = filled_user_creation_form.save()
 
-            user = authenticate(username=request.POST['username'],
-                                password=request.POST['password'])
+            # authenticate the new user against the database (formality)
+            user = authenticate(username=user.username,
+                                password=request.POST['password1'])
 
-            # if ther user is found in the database
-            if user is not None:
+            # log the new user into the site and redirect to front page
+            auth_login(request, user)
+            return redirect('index')
 
-                # and the user's account is active
-                if user.is_active:
+        # if the filled form is invalid
+        else:
 
-                    # then go ahead and log the user in and load the index
-                    auth_login(request, user)
-                    return render(request, 'index.html', context)
+            # save error message and invalid form to be passed back for editing
+            context['error_on_create'] = True
+            context['user_creation_form'] = filled_user_creation_form
+
+    # if the request wasn't a POST or the filled form was invalid, render the
+    # registration page (with a blank form in the first case and the invalid
+    # form in the second case).
+    return render(request, 'register.html', context)
 
 
-                # if the user's account is not active
-                else:
+def login(request):
 
-                    # reload the login page and display error message
-                    context['error'] = 'Account deactivated.'
-                    return render(request, 'login.html', context)
+    # if a user is already logged in, redirect to the front page
+    if request.user.is_authenticated():
+        return redirect('index')
 
-            # if this user doesn't exist in the database
+    # if the hit to this URL was a POST (not GET or DELETE or whatever)
+    if request.method == 'POST':
+
+        # attempt to authenticate the user
+        user = authenticate(username=request.POST['username'],
+                            password=request.POST['password'])
+
+        # if ther user is found in the database
+        if user is not None:
+
+            # and the user's account is active
+            if user.is_active:
+
+                # then go ahead and log the user in and redirect to front page
+                auth_login(request, user)
+                # return render(request, 'index.html', {})
+                return redirect('index')
+
+            # if the user's account is not active
             else:
 
                 # reload the login page and display error message
-                context['error'] = 'Username or password not found.'
+                context['error'] = 'Account deactivated.'
                 return render(request, 'login.html', context)
 
-        # if the user filled out the registration form
+        # if this user doesn't exist in the database
         else:
-            pass
+
+            # reload the login page and display error message
+            context['error'] = 'Username or password not found.'
+            return render(request, 'login.html', context)
 
     # if the request method was not POST
     else:
-        return render(request, 'login.html', context)
+        return render(request, 'login.html', {})
 
 
 def logout(request):
