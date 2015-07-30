@@ -9,4 +9,7 @@ urlpatterns = [
 
     url(r'^create-post/$', 'main.views.create_post', name='create_post'),
     url(r'^get-posts/$', 'main.views.get_posts', name='get_posts'),
+
+    url(r'^create-favorite/$', 'main.views.create_favorite', name='create_favorite'),
+    url(r'^delete-favorite/$', 'main.views.delete_favorite', name='delete_favorite'),
 ]
