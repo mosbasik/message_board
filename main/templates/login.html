@@ -13,7 +13,7 @@
             <form action="{% url 'login' %}" id="login-form" method="POST" class="col-sm-offset-3 col-sm-6">
                 {% csrf_token %}
 
-                <p class="text-center help-block">{{ message }}</p>
+                <p class="text-center help-block">{{ error }}</p>
 
                 <div class="form-group">
                     <label for="username">Username</label>

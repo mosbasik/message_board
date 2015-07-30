@@ -73,11 +73,14 @@ def login(request):
     # if the hit to this URL was a POST (not GET or DELETE or whatever)
     if request.method == 'POST':
 
+        # create a blank context dictionary for some reason
+        context = {}
+
         # attempt to authenticate the user
         user = authenticate(username=request.POST['username'],
                             password=request.POST['password'])
 
-        # if ther user is found in the database
+        # if the user is found in the database
         if user is not None:
 
             # and the user's account is active
