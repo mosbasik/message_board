@@ -1,20 +1,24 @@
-# django-app-template
-Basic structure of a django app, for reuse when starting new apps.
+# message_board
 
-## How to Use:
+A simple message board built in about a day's time.  Goals:
 
-1. (Optional): Make a github repository if you want to keep this project online.
+## User Stories
 
-1. Make a virtual python environment on your machine using the repository name you intend to use for this project: `mkproject repository_name`.  To do this you need to have `virtualenv` and `virtualenvwrapper` installed for your system's Python environment.  To know if you have these already, check if they show up when you run `pip freeze`.  You need `pip` installed, of course.  If you don't have them, run `pip install virtualenv virtualenvwrapper`.
+[x] As a user I can post messages
+[x] As a user I can see Bootstrap styling
+[x] As a user I can login
+[x] As a user I can create an account
+[ ] As a non-logged in user I can see messages, but cannot post them
+[ ] As a user I can favorite another user’s message
+[x] As a user I want to load new messages without refreshing the page
+[ ] As a staff member I can delete messages
 
-1. Go up one level, out of your project folder that was just created (`cd ..`) and delete it: `rmdir repository_name`.
+## Stretch Goal User Stories
 
-1. Clone this repository, using your project's name: `git clone git@github.com:mosbasik/django-app-template.git repository_name`.
-
-1. Enter your local repo (`cd repository_name`).  If you made a GitHub repo in step one, set your local repo's origin remotes to it, preferably using the SSH link: `git remote set-url origin git@github.com:USERNAME/OTHERREPOSITORY.git`.
-
-1. Install Django and the Python MySQL bindings by running `pip install -r reqs.txt` while in the top folder of your repo.  You will get the versions specified in `reqs.txt`.
-
-1. Enter the `project` folder.  Make a copy of `settings_secret.py.template` and name it simply `settings_secret.py`.  This file will not be kept in version control.  Enter a secret key for your app (consider using a tool like http://www.miniwebtool.com/django-secret-key-generator/) and the details for your database server (host, username, password) and the specific database name you want this app to use.
-
-1. Go back to the top level of the repo and run `./manage.py syncdb` to do the initial database setup (you should be prompted to create a Django admin user for this app).
+[x] As a user I can browse paginated messages
+[x] As a user I can browse paginated results infinite scrolling/load older posts
+[ ] As an anonymous user I can post messages
+[ ] As an anonymous user I can modify/delete messages I’ve created
+[ ] As an admin I can pin a message
+[ ] As a user I can browse/post messages in a thread/reply format
+[ ] As a user I can upload media
