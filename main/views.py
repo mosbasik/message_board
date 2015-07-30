@@ -3,9 +3,17 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 # user authentication
-from django.contrib.auth.models import User
+from django.contrib.auth.decorators import (
+    login_required,
+    user_passes_test,
+)
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
+from django.contrib.auth.models import User
+from django.contrib.auth import (
+    authenticate,
+    login as auth_login,
+    logout as auth_logout,
+)
 
 # imports from this app
 from main.models import Post
