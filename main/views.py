@@ -126,12 +126,45 @@ def create_post(request):
 
 
 def get_posts(request):
+    context = {}
+
+    # if a user is logged in, store their favorites in the context
+    if request.user.is_authenticated():
+        favorites = request.user.favorites.all()
+        context['favorites'] = favorites
+
+    # get the next page of posts
     page = int(request.GET.get('page', 0))
     page_size = 10
     start = page * page_size
     end = (page+1) * page_size
     posts = Post.objects.all().order_by('-created')[start:end]
+
+    # if there are posts, load them. otherwise send nothing.
     if len(posts) > 0:
-        return render(request, 'posts-page.html', {'posts': posts})
+        context['posts'] = posts
+        return render(request, 'posts-page.html', context)
     else:
         return HttpResponse('')
+
+
+def create_favorite(request):
+    # get the user and the post from the POST request
+    user = request.user
+    post = Post.objects.get(id=int(request.POST['id']))
+
+    # add that post to that user's favorites and return a success
+    user.favorites.add(post)
+    user.save()
+    return HttpResponse(status=200)
+
+
+def delete_favorite(request):
+    # get the user and the post from the POST request
+    user = request.user
+    post = Post.objects.get(id=int(request.POST['id']))
+
+    # remove that post from that user's favorites and return a success
+    user.favorites.remove(post)
+    user.save()
+    return HttpResponse(status=200)
