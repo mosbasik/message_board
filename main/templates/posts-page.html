@@ -1,6 +1,20 @@
+{% if user.is_authenticated %}
+    <style type="text/css">
+        .post {
+            margin-right: 20%;
+            border-radius: 0px 15px 15px 15px;
+        }
+        .user-{{ user.id }}-post {
+            margin: 20px;
+            margin-left: 20%;
+            border-radius: 15px 0px 15px 15px;
+        }
+    </style>
+{% endif %}
+
 {% for post in posts %}
 	
-	<div class="row post">
+	<div class="row post user-{{ post.user.id }}-post">
 		<div class="col-sm-12">
 			<strong>{{post.user.username }}:</strong> {{ post.text }}
 		</div>
