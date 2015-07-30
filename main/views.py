@@ -116,10 +116,10 @@ def create_post(request):
     form = PostForm(request.POST)
     if form.is_valid():
         post = form.save()
-        message = 'Post successful'
+        return redirect('index')
     else:
         message = form.errors
-    return render(request, 'index.html', {'message': message})
+        return render(request, 'index.html', {'message': message})
 
 
 def get_posts(request):
