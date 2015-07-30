@@ -116,7 +116,7 @@ def create_post(request):
 
 def get_posts(request):
     page = int(request.GET.get('page', 0))
-    page_size = 3
+    page_size = 10
     start = page * page_size
     end = (page+1) * page_size
     posts = Post.objects.all().order_by('-created')[start:end]
