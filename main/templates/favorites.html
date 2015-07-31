@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <h1 id="favorites-title" class="text-center" data-user-id="{{ viewing_user.id }}">{{ viewing_user.username }}'s favorites</h1>
+        </div>
+        <hr>
+
+        <div id="posts">
+            <!-- js will populate this with posts on page load -->
+        </div>
+
+        <button id="load-older-favorite-posts" class="btn btn-default center-block">Load older favorite posts</button>
+    </div>
+
+{% endblock content %}
+
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/favorites.js' %}"></script>
+{% endblock js %}

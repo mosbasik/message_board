@@ -12,4 +12,6 @@ urlpatterns = [
 
     url(r'^create-favorite/$', 'main.views.create_favorite', name='create_favorite'),
     url(r'^delete-favorite/$', 'main.views.delete_favorite', name='delete_favorite'),
+    url(r'^get-favorites/$', 'main.views.get_favorites', name='get_favorites'),
+    url(r'^(?P<username>\w+)/favorites/$', 'main.views.view_favorites', name='view_favorites'),
 ]

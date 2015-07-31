@@ -1,8 +1,3 @@
-var page = 0    // default starting page (most recent posts)
-loadPosts()     // page 0 of posts is is loaded automatically
-
-
-
 // $('#create-post-button').click(function(e) {
 
 //     e.preventDefault()  // prevent the form from being submitted normally
@@ -46,6 +41,18 @@ $('#load-older-posts').click(function(e) {
 
 
 /**
+ * Listens for clicks on the 'load older favorite posts' button.  Default
+ * behavior is suppressed, the global page counter is incremented, and the
+ * loadPosts function is called.
+ */
+$('#load-older-favorite-posts').click(function(e) {
+    e.preventDefault()
+    page++
+    loadFavoritePosts()
+})
+
+
+/**
  * Calls 'get-posts/' with global variable 'page' as a GET parameter. If a
  * non-zero length result is returned by django, appends the older posts to
  * the bottom of the page.  If the result IS length zero, this is announced
@@ -55,7 +62,7 @@ function loadPosts() {
     $.ajax({
         url: '/main/get-posts/',
         data: {
-            page: page
+            page: page,
         },
         success: function(result) {
             console.log(result.length)
@@ -65,9 +72,39 @@ function loadPosts() {
             } else {
                 $('#posts').append(result)
             }
-        }
+        },
     })
 }
+
+
+/**
+ * Calls 'get-favorites/' with global variable 'page' as a GET parameter. If a
+ * non-zero length result is returned by django, appends the older posts to
+ * the bottom of the page.  If the result IS length zero, this is announced
+ * with a message and the 'load older posts' button is hidden.
+ */
+function loadFavoritePosts() {
+
+    var user_id = $('#favorites-title').attr('data-user-id')
+
+    $.ajax({
+        url: '/main/get-favorites/',
+        data: {
+            user_id: user_id,
+            page: page,
+        },
+        success: function(result) {
+            console.log(result.length)
+            if (result.length === 0) {
+                $('#posts').append('<p class="text-center">No more favorites to load.</p>')
+                $('#load-older-favorite-posts').hide()
+            } else {
+                $('#posts').append(result)
+            }
+        },
+    })
+}
+
 
 
 $('#posts').on('click', '.favorite-button', function() {

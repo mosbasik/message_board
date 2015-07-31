@@ -168,3 +168,34 @@ def delete_favorite(request):
     user.favorites.remove(post)
     user.save()
     return HttpResponse(status=200)
+
+
+def get_favorites(request):
+    context = {}
+
+    # if the requested user is logged in, store their favorites in the context
+    if request.user.is_authenticated():
+        favorites = request.user.favorites.all()
+        context['favorites'] = favorites
+
+    # get the next page of favorite posts
+    user_id = request.GET.get('user_id', None)
+    user = User.objects.get(id=user_id)
+    page = int(request.GET.get('page', 0))
+    page_size = 10
+    start = page * page_size
+    end = (page+1) * page_size
+    posts = user.favorites.all().order_by('-created')[start:end]
+
+    print posts
+
+    if len(posts) > 0:
+        context['posts'] = posts
+        return render(request, 'posts-page.html', context)
+    else:
+        return HttpResponse('')
+
+
+def view_favorites(request, username=None):
+    viewing_user = User.objects.get(username=username)
+    return render(request, 'favorites.html', {'viewing_user': viewing_user})

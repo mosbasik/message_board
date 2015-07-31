@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
 {% block content %}
 
     <div class="container">
@@ -37,3 +39,8 @@
     </div>
 
 {% endblock content %}
+
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+{% endblock js %}
