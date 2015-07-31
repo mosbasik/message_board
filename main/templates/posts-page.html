@@ -17,7 +17,7 @@
     <div class="row post user-{{ post.user.id }}-post" data-post-id="{{ post.id }}">
         <div class="row post-header-wrapper">
             <div class="col-sm-10 post-header-content">
-                <strong>{{ post.user.username }}:</strong>
+                <strong><a href="{% url 'view_favorites' username=post.user.username %}">{{ post.user.username }}:</a></strong>
                 {{ post.created }}
             </div>
             <div class="col-sm-2 post-header-content">
