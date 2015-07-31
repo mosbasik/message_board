@@ -9,7 +9,7 @@ A simple message board built in about a day's time.  Goals:
 - [x] As a user I can login
 - [x] As a user I can create an account
 - [x] As a non-logged in user I can see messages, but cannot post them
-- [ ] As a user I can favorite another user’s message
+- [x] As a user I can favorite another user’s message
 - [x] As a user I want to load new messages without refreshing the page
 - [ ] As a staff member I can delete messages
 
