@@ -187,8 +187,6 @@ def get_favorites(request):
     end = (page+1) * page_size
     posts = user.favorites.all().order_by('-created')[start:end]
 
-    print posts
-
     if len(posts) > 0:
         context['posts'] = posts
         return render(request, 'posts-page.html', context)
